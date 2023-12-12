@@ -1,17 +1,30 @@
-import java.io.*;
-import java.net.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+// Publisher class
+class Publisher 
+{
+    private Map<String, List<Subscriber>> topicSubscribers = new HashMap<>();
 
-class Publisher {
-    public void publish(String topic, String message, String brokerAddress, int brokerPort) {
-        try {
-            Socket socket = new Socket(brokerAddress, brokerPort);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println("Publish:" + topic + ":" + message);
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void addSubscriber(String topic, Subscriber subscriber) 
+    {
+        topicSubscribers.computeIfAbsent(topic, k -> new ArrayList<>()).add(subscriber);
+    }
+
+    public void removeSubscriber(String topic, Subscriber subscriber) 
+    {
+        topicSubscribers.getOrDefault(topic, new ArrayList<>()).remove(subscriber);
+    }
+
+    public void publishMessage(String topic, String messageContent) 
+    {
+        Message message = new Message(messageContent);
+
+        for (Subscriber subscriber : topicSubscribers.getOrDefault(topic, new ArrayList<>())) 
+        {
+            subscriber.receiveMessage(message);
         }
     }
 }
-

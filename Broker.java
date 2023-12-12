@@ -3,23 +3,33 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
+// Broker class
 class Broker {
-    private Map<String, Socket> subscribers = new HashMap<>();
+    public static void main(String[] args) 
+    {
+        Publisher publisher = new Publisher();
 
-    public void subscribe(String topic, Socket subscriber) {
-        subscribers.put(topic, subscriber);
-        System.out.println("Subscriber connected for topic: " + topic);
-    }
+        Subscriber subscriber1 = new Subscriber("Subscriber 1");
+        Subscriber subscriber2 = new Subscriber("Subscriber 2");
+        System.out.println(" -- Subscriber [1] -- ");
+        // Subscribers choose topics to subscribe to
+        System.out.println(" Choose What You Want To Subscribe To: ");
+        
+        System.out.println("[0]: None  ");
+        System.out.println("[1]: News  ");
+        System.out.println("[2]: Weather  ");
 
-    public void publish(String topic, String message) {
-        Socket subscriber = subscribers.get(topic);
-        if (subscriber != null) {
-            try {
-                PrintWriter out = new PrintWriter(subscriber.getOutputStream(), true);
-                out.println("New message on topic '" + topic + "': " + message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        publisher.addSubscriber("News", subscriber1);
+        publisher.addSubscriber("Weather", subscriber1);
+
+        System.out.println(" -- Subscriber [2] -- ");
+        publisher.addSubscriber("Weather", subscriber2);
+
+        // Publish messages to specific topics
+        publisher.publishMessage("News", "Breaking news!");
+        publisher.publishMessage("Weather", "Sunny day forecast!");
+
+        // You can also remove subscribers from specific topics if needed
+        // publisher.removeSubscriber("News", subscriber1);
     }
 }
