@@ -43,13 +43,13 @@ class Broker {
         
         do
         {
-            System.out.println("####################################");
+            System.out.println("___________________________________\n");
             System.out.println(" Choose What You Want To Publish ");
-            System.out.println("####################################");
+            System.out.println("___________________________________\n");
             System.out.println("[1]: Publish Temperature ");
             System.out.println("[2]: Publish Humidity ");
             System.out.println("[3]: Publish Temperature + Humidity");
-            System.out.println("####################################");
+            System.out.println("___________________________________");
                 userChoice = scanner.nextInt();
                 // Publish messages to specific topics
                 Publish_To_Subs(userChoice,publisher);
