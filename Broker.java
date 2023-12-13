@@ -3,6 +3,8 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Random;
+
 
 // Broker class
 class Broker {
@@ -10,8 +12,9 @@ class Broker {
     {
         Publisher publisher = new Publisher();
         Scanner scanner = new Scanner(System.in);
+        
 
-
+    
         Subscriber subscriber1 = new Subscriber("Hicham");
         Subscriber subscriber2 = new Subscriber("Khaled");
         System.out.println(" -- "+ subscriber1.get_Name() +" -- ");
@@ -19,9 +22,9 @@ class Broker {
         System.out.println(" Choose What You Want To Subscribe To: ");
         
         
-        System.out.println("[1]: News  ");
-        System.out.println("[2]: Weather  ");
-        System.out.println("[3]: News + Weather  ");
+        System.out.println("[1]: Temperature  ");
+        System.out.println("[2]: Humidity  ");
+        System.out.println("[3]: Temperature + Humidity  ");
 
         int userChoice = scanner.nextInt();
         Sub_To_Topic(userChoice,publisher,subscriber1);
@@ -31,28 +34,29 @@ class Broker {
         System.out.println(" Choose What You Want To Subscribe To: ");
         
         
-        System.out.println("[1]: News  ");
-        System.out.println("[2]: Weather  ");
-        System.out.println("[3]: News + Weather  ");
+        System.out.println("[1]: Temperature  ");
+        System.out.println("[2]: Humidity  ");
+        System.out.println("[3]: Temperature + Humidity  ");
 
         userChoice = scanner.nextInt();
         Sub_To_Topic(userChoice,publisher,subscriber2);
         
         do
         {
+            System.out.println("####################################");
             System.out.println(" Choose What You Want To Publish ");
-
-            System.out.println("[1]: Publish News ");
-            System.out.println("[2]: Publish Weather ");
-            System.out.println("[3]: Publish News + Weather ");
-            
+            System.out.println("####################################");
+            System.out.println("[1]: Publish Temperature ");
+            System.out.println("[2]: Publish Humidity ");
+            System.out.println("[3]: Publish Temperature + Humidity");
+            System.out.println("####################################");
                 userChoice = scanner.nextInt();
                 // Publish messages to specific topics
                 Publish_To_Subs(userChoice,publisher);
         }while(userChoice!=0);    
 
         // You can also remove subscribers from specific topics if needed
-        // publisher.removeSubscriber("News", subscriber1);
+        // publisher.removeSubscriber("Temperature", subscriber1);
     }
 
     public static void Sub_To_Topic(int userChoice,Publisher publisher ,Subscriber subscriber)
@@ -61,14 +65,14 @@ class Broker {
         {
             
             case 1:
-                publisher.addSubscriber("News", subscriber);
+                publisher.addSubscriber("Temperature", subscriber);
                 break;
             case 2:
-                publisher.addSubscriber("Weather", subscriber);
+                publisher.addSubscriber("Humidity", subscriber);
                 break;
             case 3:
-                publisher.addSubscriber("News", subscriber);
-                publisher.addSubscriber("Weather", subscriber);
+                publisher.addSubscriber("Temperature", subscriber);
+                publisher.addSubscriber("Humidity", subscriber);
                 break;
 
         }
@@ -76,17 +80,19 @@ class Broker {
 
     public static void Publish_To_Subs(int userChoice,Publisher publisher)
     {
+        Random rand = new Random();
+        
         switch (userChoice) 
         {
             case 1:
-                publisher.publishMessage("News", "Breaking news!");
+                publisher.publishMessage("Temperature", "Temp is: "+ rand.nextInt(101) + "°");
                 break;
             case 2:
-                publisher.publishMessage("Weather", "Sunny day forecast!");
+                publisher.publishMessage("Humidity", "Humidity is at: "+ rand.nextInt(101) + "%");
                 break;
             case 3:
-                publisher.publishMessage("News", "Breaking news!");
-                publisher.publishMessage("Weather", "Sunny day forecast!");
+                publisher.publishMessage("Temperature", "Temp Is: "+ rand.nextInt(101) + "°");
+                publisher.publishMessage("Humidity", "Humidity is at: "+ rand.nextInt(101) + "%");
         }
     }
 }
