@@ -12,9 +12,14 @@ class Subscriber
     {
         this.name = name;
     }
+    public String get_Name()
+    {
+        return name;
+    }
 
     public void receiveMessage(Message message) 
     {
-        System.out.println(name + " received message: " + message.getContent());
+        System.out.println("[" + name + "]" + " Notification Message: " + message.getContent());
+        System.out.println("----------------------------------------------------------------");
     }
 }
