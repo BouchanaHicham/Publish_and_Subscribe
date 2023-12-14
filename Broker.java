@@ -55,8 +55,8 @@ class Broker {
                 Publish_To_Subs(userChoice,publisher);
         }while(userChoice!=0);    
 
-        // You can also remove subscribers from specific topics if needed
-        // publisher.removeSubscriber("Temperature", subscriber1);
+        // You can also remove subscribers from specific topics if needed 
+        // publisher.removeSubscriber("Temperature", subscriber1); 
     }
 
     public static void Sub_To_Topic(int userChoice,Publisher publisher ,Subscriber subscriber)
