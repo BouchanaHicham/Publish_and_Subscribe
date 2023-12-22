@@ -1,23 +1,20 @@
-import java.io.*;
-import java.net.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Random;
+import java.util.Scanner;
 
-
-// Broker class
-class Broker {
-    public static void main(String[] args) 
-    {
-        Publisher publisher = new Publisher();
-        Scanner scanner = new Scanner(System.in);
-        
-
+public class Broker {
+    public static void main(String[] args) throws IOException {
+            int port = 12345; // Choose a port number
+            Publisher publisher = new Publisher(port);
+            Scanner scanner = new Scanner(System.in);
     
-        Subscriber subscriber1 = new Subscriber("Hicham");
-        Subscriber subscriber2 = new Subscriber("Khaled");
-        System.out.println(" -- "+ subscriber1.get_Name() +" -- ");
+            Subscriber subscriber1 = new Subscriber(new Socket("localhost", port));
+            Subscriber subscriber2 = new Subscriber(new Socket("localhost", port));
+           
+        
+        //System.out.println(" -- "+ subscriber1.get_Name() +" -- ");
+        System.out.println(" -- Hicham -- ");
         // Subscribers choose topics to subscribe to
         System.out.println(" Choose What You Want To Subscribe To: ");
         
@@ -29,7 +26,7 @@ class Broker {
         int userChoice = scanner.nextInt();
         Sub_To_Topic(userChoice,publisher,subscriber1);
         
-        System.out.println(" -- "+ subscriber2.get_Name() +" -- ");
+         System.out.println(" -- Khaled -- ");
         // Subscribers choose topics to subscribe to
         System.out.println(" Choose What You Want To Subscribe To: ");
         
@@ -41,8 +38,8 @@ class Broker {
         userChoice = scanner.nextInt();
         Sub_To_Topic(userChoice,publisher,subscriber2);
         
-        do
-        {
+       // do
+       // {
             System.out.println("___________________________________\n");
             System.out.println(" Choose What You Want To Publish ");
             System.out.println("___________________________________\n");
@@ -53,7 +50,7 @@ class Broker {
                 userChoice = scanner.nextInt();
                 // Publish messages to specific topics
                 Publish_To_Subs(userChoice,publisher);
-        }while(userChoice!=0);    
+        //}while(userChoice!=0);    
 
         // You can also remove subscribers from specific topics if needed 
         // publisher.removeSubscriber("Temperature", subscriber1); 
@@ -95,4 +92,4 @@ class Broker {
                 publisher.publishMessage("Humidity", "Humidity is at: "+ rand.nextInt(101) + "%");
         }
     }
-}
+    }

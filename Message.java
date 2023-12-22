@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
 // Message class to represent the data being published
-class Message 
+class Message implements Serializable 
 {
     private String content;
 
